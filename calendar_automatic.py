@@ -14,9 +14,14 @@ font_bold_path = (
 )
 image_ref = Path(__file__).parent / "ress/ref/Calendar-2024_jan.png"
 
-year = 2024
+font_bold = str(font_bold_path)
+font_roman = str(font_roman_path)
 
-month = 1  # pour les essais Février 2024
+# info year
+year = 2024
+year_pos = (1.5, 1.777, 0)
+year_scale = (0.175, 0.175, 0.175)
+
 
 # Size canvas
 canvas_dim = (1.78, 2.502)
@@ -40,6 +45,9 @@ scale_date = (0.2, 0.2, 0.2)
 cell_size = 0.46  # Taille de la cellule de la grille
 
 # Paramètres de la grille des jours
+day_pos = (-1.35, 1, 0)
+day_scale = (0.10, 0.10, 0.10)
+
 start_day_x = -1.35
 start_day_y = 1
 scale_day = (0.10, 0.10, 0.10)
@@ -49,12 +57,13 @@ start_line_x = -0.5
 start_line_y = -0.5
 
 # Position de l'année
-year_pos_x = 1.5
-year_pos_y = 1.777
-scale_year_factor = 0.175
-scale_year = (scale_year_factor, scale_year_factor, scale_year_factor)
+
 
 # Position du mois
+month_pos = (-1.45, 1.9, 0)
+month_pos_2 = (-1.45, 1.9, -0.0006)
+month_scale = (0.8, 0.8, 0.8)
+
 month_pos_x = -1.45
 month_pos_y = 1.420
 scale_month_factor = 0.8
@@ -66,8 +75,8 @@ line_scale = (1.65, -0.003, 1)
 line_offset = 0.55
 
 # Info bloc noir
-bloc_pos = (0, 1.96, -0.0005)
-bloc_scale = (1.78, 0.54, 1)
+bloc_pos = (0, 1.9095, -0.0005)
+bloc_scale = (1.78, 0.631, 1)
 # TODO créer un fonction pour la création de material.
 # On aurait en parametre si mat=true alors pas specular ni roughness et juste le tuple rgb en diffuse
 # Les couleurs / material
@@ -87,22 +96,35 @@ white_material.specular_intensity = 0
 white_material.roughness = 0
 
 
-def create_day_line(start_day_x, start_day_y):
-    """create the line of the day"""
-    days = calendar.day_name
-    x, y = start_day_x, start_day_y
+def create_text(
+    text: str,
+    text_location: tuple,
+    material,
+    font_path: str,
+    scale: tuple,
+    align=("LEFT", "TOP"),
+):
+    """Create a text objet.
 
-    for day in days:
-        bpy.ops.object.text_add(enter_editmode=False, location=(x, y, 0))
-        bpy.context.object.data.body = str(day[:3])
-        bpy.context.object.data.align_x = "CENTER"
+    Args:
+        text (str): the text that will display
+        location (tuple): the coordonate x, y, z could be a tuple of 3 integer or float
+        material (_type_): a material who as already load
+        font_path (str): the path of the font
+        scale (tuple): the scale x, y, z could be a tuple of 3 integer or float
+        align (tuple, optional): Defaults to ('LEFT', 'TOP'). Align value available for the x axis are :
+        LEFT, RIGHT, CENTER, JUSTIFY, FLUSH.
+        Align value available for the y axis are:
+        TOP, TOP BASELINE, MIDDLE, BOTTOM BASELINE, BOTTOM.
+    """
+    bpy.ops.object.text_add(enter_editmode=False, location=text_location)
+    bpy.context.object.data.body = str(text)
 
-        bpy.context.object.active_material = black_material
-        bpy.context.object.data.font = bpy.data.fonts.load(str(font_roman_path))
-
-        bpy.context.object.scale = scale_day
-
-        x += cell_size
+    bpy.context.object.data.align_x = align[0]
+    bpy.context.object.data.align_y = align[1]
+    bpy.context.object.active_material = material
+    bpy.context.object.data.font = bpy.data.fonts.load(font_path)
+    bpy.context.object.scale = scale
 
 
 def create_plane(mesh_pos: tuple, mesh_dim, color):
@@ -162,30 +184,6 @@ def create_calendar_month(
             line_pos = tuple(temp_list)
 
 
-def create_month(month, month_pos_x, month_pos_y):
-    months = calendar.month_name
-    bpy.ops.object.text_add(
-        enter_editmode=False, location=(month_pos_x, month_pos_y, 0)
-    )
-    bpy.context.object.data.body = str(months[month][:3])
-
-    bpy.context.object.data.align_x = "LEFT"
-    bpy.context.object.active_material = white_material
-    bpy.context.object.data.font = bpy.data.fonts.load(str(font_bold_path))
-    bpy.context.object.scale = scale_month
-
-
-def create_year(year, year_pos_x, year_pos_y):
-    bpy.ops.object.text_add(enter_editmode=False, location=(year_pos_x, year_pos_y, 0))
-    bpy.context.object.data.body = str(year)
-
-    bpy.context.object.data.align_x = "RIGHT"
-    bpy.context.object.active_material = white_material
-    bpy.context.object.data.font = bpy.data.fonts.load(str(font_roman_path))
-    bpy.context.object.scale = scale_year
-
-
-# TODO creer les différents éléments pour le rendu la cam et les setting
 def render_setting(
     cam_pos, resolution, ortho_scale, light_pos, light_scale, light_power, output_path
 ):
@@ -223,34 +221,73 @@ def render_setting(
     # Sauvegarder l'image rendue
     bpy.data.images["Render Result"].save_render(str(output_path))
 
-    # TODO automatiser les rendu de chaque planche --> jpeg
-    # TODO créer un pdf à partir de ces 12 jpeg et supprimer ces jpeg
 
-    # TODO Penser à comment bien organiser le code
-    """definir les dossiers 1 pour le script principale qui fera appel
-    aux  fonction dans le dossier constructor.
-    et fichier data (json) qui renseignera tous les info sur tous les élements
-    présent dans la scène, couleur, position, scale des objets, les setting de rendu et autres
-    """
+# TODO créer un pdf à partir de ces 12 jpeg et supprimer ces jpeg
+
+# TODO Penser à comment bien organiser le code
+"""definir les dossiers 1 pour le script principale qui fera appel
+aux  fonction dans le dossier constructor.
+et fichier data (json) qui renseignera tous les info sur tous les élements
+présent dans la scène, couleur, position, scale des objets, les setting de rendu et autres
+"""
 
 
-bpy.ops.object.select_all(action="SELECT")
-bpy.ops.object.delete(use_global=False, confirm=False)
+render_output_folder = Path(__file__).parent / "ress/images"
+months = calendar.month_name
+days = calendar.day_name
 
-create_plane(canvas_pos, canvas_dim, white_material)
-create_plane(bloc_pos, bloc_scale, black_material)
+for month_num in range(1, 13):
+    bpy.ops.object.select_all(action="SELECT")
+    bpy.ops.object.delete(use_global=False, confirm=False)
+    # définir le chemin pour l'enregistrement
+    render_output_path = (
+        render_output_folder / f"calendar_graphictypo_{year}_{month_num}.jpg"
+    )
 
-create_year(year, year_pos_x, year_pos_y)
-create_month(1, month_pos_x, month_pos_y)
-create_day_line(start_day_x, start_day_y)
-create_calendar_month(year, month, start_date_x, start_date_y, cell_size, line_pos)
+    # create the white backgound
+    create_plane(canvas_pos, canvas_dim, white_material)
 
-render_setting(
-    cam_pos,
-    scene_resolution,
-    cam_ortho_scale,
-    light_pos,
-    light_scale,
-    light_power,
-    render_output_path,
-)
+    # create the black block
+    create_plane(bloc_pos, bloc_scale, black_material)
+
+    # create the text year
+    create_text(
+        year, year_pos, white_material, font_roman, year_scale, align=("RIGHT", "TOP")
+    )
+
+    # create the month
+    month_name_formatted = months[month_num][:3]
+    create_text(month_name_formatted, month_pos, white_material, font_bold, month_scale)
+
+    # create day's name line
+    offset = cell_size
+    day_pos_init = day_pos
+    for day in range(7):
+        day = days[day][:3]
+        create_text(
+            day,
+            day_pos_init,
+            black_material,
+            font_roman,
+            day_scale,
+            align=("CENTER", "TOP"),
+        )
+        day_pos_temp = list(day_pos_init)
+        day_pos_temp[0] += offset
+        day_pos_init = tuple(day_pos_temp)
+
+    # create all date of the month
+    create_calendar_month(
+        year, month_num, start_date_x, start_date_y, cell_size, line_pos
+    )
+
+    # render & save image
+    render_setting(
+        cam_pos,
+        scene_resolution,
+        cam_ortho_scale,
+        light_pos,
+        light_scale,
+        light_power,
+        render_output_path,
+    )
