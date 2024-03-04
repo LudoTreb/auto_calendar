@@ -1,0 +1,80 @@
+{
+    "Settings": {
+      "render": {
+        "cam_pos": [0, 0, 6.967],
+        "scene_resolution": [3508, 4961],
+        "cam_ortho_scale": 5
+      },
+      "lighting": {
+        "light_pos": [0, 0, 2],
+        "light_scale": [8, 8, 0],
+        "light_power": 5500
+      },
+      "save": {
+        "name": "calendar_graphictypo_2024.pdf",
+        "temp_render_path": "ress"
+      }
+    },
+    "Fonts": {
+      "roman_path": "ress/fonts/Helvetica LT Std/HelveticaLTStd-Roman.otf",
+      "bold_path": "ress/fonts/Helvetica LT Std/HelveticaLTStd-Bold.otf"
+    },
+    "Colors": {
+        "black": {
+            "name": "Black",
+            "diffuse_color": [0, 0, 0, 1],
+            "specular_intensity": 0,
+            "roughness": 0
+        },
+        "gray": {
+            "name": "Gray",
+            "diffuse_color": [0.05, 0.05, 0.05, 1],
+            "specular_intensity": 0,
+            "roughness": 0
+        },
+        "whihte": {
+            "name": "White",
+            "diffuse_color": [1, 1, 1, 1],
+            "specular_intensity": 0,
+            "roughness": 0
+        }
+    },
+    "Dates": {
+        "year": {
+            "year": 2024,
+            "year_pos": [1.5, 1.777, 0],
+            "year_scale": [0.175, 0.175, 0.175]
+        },
+        "month": {
+            "month_pos": [-1.35, 1, 0],
+            "month_scale": [0.8, 0.8, 0.8]
+        },
+        "date": {
+            "date_pos": [-1.35, 0.68, 0],
+            "date_scale": [0.2, 0.2, 0.2]
+        },
+        "day": {
+            "day_pos": [-1.35, 1, 0],
+            "day_scale": [0.10, 0.10, 0.10]
+        },
+        "cell": {
+            "cell_size": 0.46
+        }
+    },
+    "Meshs": {
+        "canvas": {
+            "canvas_dim": [1.78, 2.502],
+            "canvas_pos": [0, 0, -0.001]
+        },
+        "top_block": {
+            "bloc_pos": [0, 1.9095, -0.0005],
+            "bloc_scale": [1.78, 0.631, 1]
+        },
+        "separate_line": {
+            "line_pos": [0, 0.9, 0],
+            "line_scale": [1.65, -0.003, 1],
+            "line_offset": 0.55
+        }
+    }
+  }
+  
