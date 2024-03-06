@@ -339,3 +339,51 @@ Puis on continue le script sur la création du pdf.
 # from PyPDF2 import PdfWriter
 
 # create_pdf_from_img(name_calendar)
+
+
+# TODO Define a function to create a grid with a specific order of vertice's index
+"""From this grid we will position the day and date by recovering the position of the vertice grid.
+"""
+
+# the code for the creation of the grid in specific inex's order
+# Dimensions de la grille
+rows = 7
+cols = 8
+
+# Création d'une liste pour stocker les coordonnées des sommets
+vertices = []
+
+# Création d'une boucle pour générer les coordonnées des sommets
+for x in range(rows):
+    for y in range(cols):
+        vertices.append((x, y, 0))  # Ajoute les coordonnées du sommet à la liste
+
+# Création d'une liste pour stocker les indices des faces
+faces = []
+
+# Création d'une boucle pour générer les indices des faces
+for y in range(rows - 1):
+    for x in range(cols - 1):
+        # Calcul des indices des sommets pour cette face
+        v1 = x + y * cols
+        v2 = v1 + 1
+        v3 = v1 + cols
+        v4 = v3 + 1
+        # Ajout des indices des sommets à la liste des faces
+        faces.append((v1, v2, v4, v3))  # Ajoute les indices de la face à la liste
+
+# Création d'un nouveau mesh
+mesh = bpy.data.meshes.new(name="Grid")
+
+# Ajout des sommets et des faces au mesh
+mesh.from_pydata(vertices, [], faces)
+
+# Mise à jour du mesh
+mesh.update()
+
+# Création d'un nouvel objet contenant le mesh
+obj = bpy.data.objects.new(name="Grid_Object", object_data=mesh)
+
+# Ajout de l'objet à la scène
+scene = bpy.context.scene
+scene.collection.objects.link(obj)
