@@ -162,65 +162,6 @@ def render_setting(
     bpy.data.images["Render Result"].save_render(str(output_path))
 
 
-def delete_temp_folder(path_folder_to_delete):
-    """Before delete the folder, it's checking if the folder name content temp
-
-    Args:
-        path_folder_to_delete (_type_): _description_
-    """
-    if (
-        path_folder_to_delete.exists()
-        and path_folder_to_delete.is_dir()
-        and ("temp" in str(path_folder_to_delete))
-    ):
-        for item in path_folder_to_delete.iterdir():
-            if item.is_file():
-                item.unlink()
-
-        path_folder_to_delete.rmdir()
-
-    else:
-        print("Le dossier n'existe pas")
-
-
-def create_pdf_from_img(name_pdf: str, path_imgs_folder: str = "ress/temp_img"):
-    """create one pdf from all images present in a list.
-
-    Args:
-        paht_imgs_folder (_type_): Path object of the images folder
-        path_pdf_output (_type_): Path objet of the pdf file
-    """
-    # récupère sous une string tous les chemins des images jpeg dans une liste
-    image_folder = Path(__file__).parent / path_imgs_folder
-    image_paths = image_folder.glob("*.jpg")
-
-    # convertis tous ces jpeg en pdf
-    for image in image_paths:
-        img = Image.open(image, "r")
-        img_convert = img.convert("RGB")
-        img_convert.save(f"{str(image)[:-3]}pdf")
-
-    # Récupère sous une string tous les chemins des images pdf dans une liste
-    pdf_paths = image_folder.glob("*.pdf")
-    # Tri les pdf en ordre croissant par rapport à leur nom qui fini par un nombre
-    pdf_paths_sorted = sorted(
-        pdf_paths, key=lambda path: int(str(path).split("_")[-1].split(".")[0])
-    )
-    # créer une instance de Pdfwritter pour qui va permmettre de fusionner les pdf en un seul
-    merger = PdfWriter()
-    pdf_out_folder = Path(__file__).parent / "export"
-    pdf_out_folder.mkdir()
-    pdf_out_file = pdf_out_folder / name_pdf
-    # fusionne les pdf en un seul
-    for pdf in pdf_paths_sorted:
-        merger.append(pdf)
-    merger.write(pdf_out_file)
-    merger.close
-
-    # supprime le dossier temp
-    delete_temp_folder(image_folder)
-
-
 black_material = create_material(
     data["Colors"]["black"]["name"],
     data["Colors"]["black"]["diffuse_color"],
@@ -241,7 +182,7 @@ white_material = create_material(
 )
 
 
-for month_num in range(1, 3):
+for month_num in range(1, 13):
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False, confirm=False)
 
@@ -334,8 +275,3 @@ for month_num in range(1, 3):
 """Une solution serait dans le script d'avoir une ligne qui lance la partie blender, l'execute et puis l'arrete. 
 Puis on continue le script sur la création du pdf.
 """
-
-# from PIL import Image
-# from PyPDF2 import PdfWriter
-
-# create_pdf_from_img(name_calendar)
