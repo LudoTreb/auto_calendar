@@ -7,7 +7,11 @@ import bpy
 months = calendar.month_name
 days = calendar.day_name
 
-with open("data.json", "r") as json_file:
+# TODO Utulisé la methode as_posix() sur les objets Path pour les convertir en str.
+
+data_path = str(Path(__file__).parent / "data.json")
+
+with open(data_path, "r") as json_file:
     data = json.load(json_file)
 
 name_calendar = data["Settings"]["save"]["name"]
@@ -269,9 +273,3 @@ for month_num in range(1, 13):
         data["Settings"]["lighting"]["light_power"],
         render_output_path,
     )
-
-
-# TODO Trouver une solution pour lancer le script en une fois sans avoir à installer Pillow dans l'environnement de blender.
-"""Une solution serait dans le script d'avoir une ligne qui lance la partie blender, l'execute et puis l'arrete. 
-Puis on continue le script sur la création du pdf.
-"""
