@@ -67,7 +67,3 @@ def create_pdf_from_img(name_pdf: str, path_imgs_folder: str = "ress/temp_img"):
 
     # supprime le dossier temp
     delete_temp_folder(image_folder)
-
-
-if __name__ == "__main__":
-    create_pdf_from_img(name_calendar)
