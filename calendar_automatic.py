@@ -110,7 +110,7 @@ def create_calendar_month(
         if dt.month == month:
             day_text.active_material = black_material
         else:
-            day_text.active_material = gray_material
+            day_text.active_material = white_material
 
         day_text.scale = date_scale  # Ajuster la taille du texte
 
@@ -225,7 +225,7 @@ for month_num in range(1, 13):
     )
 
     # create the month
-    month_name_formatted = months[month_num][:3]
+    month_name_formatted = months[month_num][:3] + "."
     create_text(
         month_name_formatted,
         data["Dates"]["month"]["month_pos"],
@@ -238,7 +238,7 @@ for month_num in range(1, 13):
     offset = data["Dates"]["cell"]["cell_size"]
     day_pos_init = data["Dates"]["day"]["day_pos"]
     for day in range(7):
-        day = days[day][:3]
+        day = days[day][:1]
         create_text(
             day,
             day_pos_init,
