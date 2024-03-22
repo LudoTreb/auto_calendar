@@ -21,7 +21,6 @@ def lancer_script_blender(nom_fichier_blend, nom_script):
     commande_blender = [
         chemin_blender,  # Chemin complet de l'exécutable Blender
         "--background",  # Lancer Blender en arrière-plan sans interface graphique
-        chemin_fichier_blend.as_posix(),  # Chemin du fichier Blender
         "--python",
         nom_script,  # Spécifier le script Python à exécuter
     ]
