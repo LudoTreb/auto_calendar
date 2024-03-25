@@ -7,7 +7,7 @@ from create_pdf import create_pdf_from_img
 with open("data.json", "r") as json_file:
     data = json.load(json_file)
 
-name_calendar = data["Settings"]["save"]["name"]
+name_calendar = f"{data['Settings']['save']['name']}{data['Dates']['year']['year']}{data['Settings']['save']['extension']}"
 my_script = "calendar_automatic.py"
 
 
