@@ -11,7 +11,8 @@
         "light_power": 5500
       },
       "save": {
-        "name": "calendar_graphictypo_2024.pdf",
+        "name": "calendar_graphictypo_",
+        "extension": ".pdf",
         "temp_render_path": "ress"
       }
     },
