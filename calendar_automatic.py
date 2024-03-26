@@ -7,7 +7,7 @@ import bpy
 months = calendar.month_name
 days = calendar.day_name
 
-# TODO Utulisé la methode as_posix() sur les objets Path pour les convertir en str.
+# TODO Utulisé la methode as_posix() sur les objets Path pour les convertir en str Pour focntionner sur tout type d'os
 
 data_path = str(Path(__file__).parent / "data.json")
 
@@ -64,7 +64,14 @@ def create_text(
     bpy.context.object.scale = scale
 
 
-def create_plane(mesh_pos: tuple, mesh_dim, color):
+def create_plane(mesh_pos: list, mesh_dim: list, color):
+    """_summary_
+
+    Args:
+        mesh_pos (list): coordonate x, y, z of the mesh
+        mesh_dim (list): scale factor x, y for un 2d mesh
+        color (_type_): _description_
+    """
     bpy.ops.mesh.primitive_plane_add(
         size=2,
         enter_editmode=False,
@@ -89,14 +96,16 @@ def create_calendar_month(
     item_one_scale,
     item_one_offset,
 ):
-    # Générer le calendrier pour le mois spécifié
+
+    # Generate a calendar for a specified month
     cal = calendar.Calendar().itermonthdates(year, month)
 
-    # Coordonnées de départ pour la première case de la grille
+    # Define coordonates of the first date
     x, y = date_pos[0], date_pos[1]
 
     final_x = x + 6 * cell_size
-    # Boucle sur chaque jour du mois
+
+    # For loop each date of the month
     line_pos = item_one_pos
     for dt in cal:
 
@@ -112,12 +121,11 @@ def create_calendar_month(
         else:
             day_text.active_material = white_material
 
-        day_text.scale = date_scale  # Ajuster la taille du texte
+        day_text.scale = date_scale
 
-        # Déplacer les coordonnées pour la prochaine case de la grille
         x += cell_size
-        # Si nous atteignons la fin de la ligne, réinitialiser x et descendre à la ligne suivante
 
+        # If we are at the end of the date line, we reset x and go down to next line with y offset
         if x > final_x:
             create_plane(line_pos, item_one_scale, gray_material)
             x = date_pos[0]
@@ -156,13 +164,10 @@ def render_setting(
     camera.data.type = "ORTHO"
     camera.data.ortho_scale = ortho_scale
 
-    # Activer la vue de la caméra
     bpy.context.scene.camera = camera
 
-    # Déclencher le rendu
     bpy.ops.render.render(write_still=True)
 
-    # Sauvegarder l'image rendue
     bpy.data.images["Render Result"].save_render(str(output_path))
 
 
