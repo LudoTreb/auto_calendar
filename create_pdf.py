@@ -10,7 +10,7 @@ with open("data.json", "r") as json_file:
 name_calendar = data["Settings"]["save"]["name"]
 
 
-def delete_temp_folder(path_folder_to_delete):
+def delete_temp_folder(path_folder_to_delete: Path):
     """Before delete the folder, it's checking if the folder name content temp
 
     Args:
@@ -38,32 +38,32 @@ def create_pdf_from_img(name_pdf: str, path_imgs_folder: str = "ress/temp_img"):
         paht_imgs_folder (_type_): Path object of the images folder
         path_pdf_output (_type_): Path objet of the pdf file
     """
-    # récupère sous une string tous les chemins des images jpeg dans une liste
+    # rerieves all jpeg paths in a list of string
     image_folder = Path(__file__).parent / path_imgs_folder
     image_paths = image_folder.glob("*.jpg")
 
-    # convertis tous ces jpeg en pdf
+    # convert all jpegs to pdf
     for image in image_paths:
         img = Image.open(image, "r")
         img_convert = img.convert("RGB")
         img_convert.save(f"{str(image)[:-3]}pdf")
 
-    # Récupère sous une string tous les chemins des images pdf dans une liste
+    # retrieves all pdf paths in a list of string
     pdf_paths = image_folder.glob("*.pdf")
-    # Tri les pdf en ordre croissant par rapport à leur nom qui fini par un nombre
+
+    # sort all pdf by their name ending who are an integer in ascending order
     pdf_paths_sorted = sorted(
         pdf_paths, key=lambda path: int(str(path).split("_")[-1].split(".")[0])
     )
-    # créer une instance de Pdfwritter pour qui va permmettre de fusionner les pdf en un seul
+    # create a PdfWriter instance to merge all pdf files into a single one
     merger = PdfWriter()
     pdf_out_folder = Path(__file__).parent / "export"
     pdf_out_folder.mkdir()
     pdf_out_file = pdf_out_folder / name_pdf
-    # fusionne les pdf en un seul
+
     for pdf in pdf_paths_sorted:
         merger.append(pdf)
     merger.write(pdf_out_file)
     merger.close
 
-    # supprime le dossier temp
     delete_temp_folder(image_folder)
