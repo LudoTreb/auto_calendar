@@ -7,7 +7,6 @@ import bpy
 months = calendar.month_name
 days = calendar.day_name
 
-# TODO Utulisé la methode as_posix() sur les objets Path pour les convertir en str Pour focntionner sur tout type d'os
 
 data_path = str(Path(__file__).parent / "data.json")
 
@@ -64,13 +63,13 @@ def create_text(
     bpy.context.object.scale = scale
 
 
-def create_plane(mesh_pos: list, mesh_dim: list, color):
-    """_summary_
+def create_plane(mesh_pos: list[float], mesh_dim: list[float], color):
+    """Create a plane with a specific coordonate and size and a material associate
 
     Args:
         mesh_pos (list): coordonate x, y, z of the mesh
         mesh_dim (list): scale factor x, y for un 2d mesh
-        color (_type_): _description_
+        color (bpy.Material): Material with a specific color
     """
     bpy.ops.mesh.primitive_plane_add(
         size=2,
@@ -87,17 +86,29 @@ def create_plane(mesh_pos: list, mesh_dim: list, color):
 
 
 def create_calendar_month(
-    year,
-    month,
-    date_pos,
-    date_scale,
-    cell_size,
-    item_one_pos,
-    item_one_scale,
-    item_one_offset,
+    year: int,
+    month: int,
+    date_pos: list[float],
+    date_scale: list[float],
+    cell_size: float,
+    item_one_pos: list[float],
+    item_one_scale: list[float],
+    item_one_offset: float,
 ):
+    """Create the design of a specific month with all dates.
 
-    # Generate a calendar for a specified month
+    Args:
+        year (int): year of the calendar
+        month (int): the number of the month
+        date_pos (list[float]): coordonates of the date
+        date_scale (list[float]): size of the date
+        cell_size (float): the offset distance between dates
+        item_one_pos (list[float]): coordonates of the item
+        item_one_scale (list[float]): size of the item
+        item_one_offset (float): the offset distance between each item
+    """
+
+    # Generate an objet calendar for a specified month
     cal = calendar.Calendar().itermonthdates(year, month)
 
     # Define coordonates of the first date
@@ -137,8 +148,26 @@ def create_calendar_month(
 
 
 def render_setting(
-    cam_pos, resolution, ortho_scale, light_pos, light_scale, light_power, output_path
+    cam_pos: list[float],
+    resolution: list[int],
+    ortho_scale: int,
+    light_pos: list[float],
+    light_scale: list[float],
+    light_power: int,
+    output_path: Path,
 ):
+    """Add all elments and settings for a render scene like cam, light...
+    And save the render file, a jpeg, in a specific folder.
+
+    Args:
+        cam_pos (list[float]): coordonates of the camera
+        resolution (list[int]): resolution of the jpeg image render file
+        ortho_scale (int): type of the camera
+        light_pos (list[float]): coordonates of the light
+        light_scale (list[float]): size of the light
+        light_power (int): intensity of the light
+        output_path (Path): path of the render file.
+    """
     bpy.context.scene.render.image_settings.file_format = "JPEG"
     bpy.context.scene.render.image_settings.quality = 100
 
@@ -191,7 +220,7 @@ white_material = create_material(
 )
 
 
-for month_num in range(1, 13):
+for month_num in range(1, 3):
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False, confirm=False)
 
