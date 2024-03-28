@@ -20,8 +20,8 @@
       }
     },
     "Fonts": {
-      "roman_path": "ress/fonts/Helvetica LT Std/HelveticaLTStd-Roman.otf",
-      "bold_path": "ress/fonts/Helvetica LT Std/HelveticaLTStd-Bold.otf"
+      "regular_path": "ress/fonts/Roboto/Roboto-Regular.ttf",
+      "bold_path": "ress/fonts/Roboto/Roboto-Bold.ttf"
     },
     "Colors": {
         "black": {
@@ -46,11 +46,11 @@
     "Dates": {
         "year": {
             "year": 2024,
-            "year_pos": [1.5, 1.777, 0],
-            "year_scale": [0.175, 0.175, 0.175]
+            "year_pos": [1.542, 2.236, 0],
+            "year_scale": [0.268, 0.268, 0.268]
         },
         "month": {
-            "month_pos": [-1.44, 1.9, 0],
+            "month_pos": [1.541, 1.957, 0],
             "month_scale": [0.8, 0.8, 0.8]
         },
         "date": {
