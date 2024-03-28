@@ -1,68 +1,122 @@
 
 # Auto Calendar
 
-# 🚧 En cours d'écriture 
+Welcome to Auto Calendar, a Python script that utilizes the Blender bpy library to create a calendar based on data it retrieves, such as the year, fonts, colors, etc., present in a JSON file.  
+The script generates a PDF file with all the months, in A3+ format.
+This way, you get a beautiful up-to-date calendar by simply changing the year, and that for all the upcoming years ✨😊
 
-Bienvenue dans AutoCalendar est un script python qui utilise la bibliothèque blender bpy pour créer un calendrier en fonction des données qu'il récupère comme l'année, les fonts, les couleurs... présentent dans un fichier json.  
-Le script génère un fichier pdf avec tous les mois, au format A3+.
-On a comme cela un très beau calendrier à jour, en changeant simplement l'année, et cela pour toutes les années qui arrivent ✨😊
-
-## Table of Contents
+## 📕 Table of Contents
 - [Auto Calendar](#auto-calendar)
-- [🚧 En cours d'écriture](#-en-cours-décriture)
-  - [Table of Contents](#table-of-contents)
-  - [Prérequis](#prérequis)
-  - [🛠️ Instalation](#️-instalation)
+  - [📕 Table of Contents](#-table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [🧰 Instalation](#-instalation)
     - [macOs, linux](#macos-linux)
     - [windows](#windows)
-  - [🕹️ Utilisation](#️-utilisation)
+  - [🕹️ Usage](#️-usage)
+    - [Preview](#preview)
 
 
-## Prérequis
-Avant d'utiliser Auto Calendar, assurez-vous d'avoir les éléments suivants installés sur votre système :
+## Prerequisites
+Before using Auto Calendar, make sure you have the following installed on your system:
 
-- Python (version 3.11.4 ou supérieure) [lien vers install de python](https://www.python.org/downloads/)
-- Blender (version 4.0 ou supérieure) [lien vers install de blender](https://www.blender.org/download/)
+- Python (version 3.11.4 ou supérieure) [link to Python installation](https://www.python.org/downloads/)
+- Blender (version 4.0 ou supérieure) [link to Blender installation](https://www.blender.org/download/)
 
 
 
-## 🛠️ Instalation
+## 🧰 Instalation
 
 ### macOs, linux
-1. Clonez ce dépôt sur votre machine:
-   ````
+Open a terminal
+
+1. Clone this repository to your machine:
+   ````bash
+   git clone https://github.com/LudoTreb/auto_calendar.git
+
     ````
 
-2. Accédez au répertoire du projet:
-   ````
+2. Navigate to the project directory:
+   ````bash
+   cd auto_calendar
+
     ```` 
-3. Créez et activez un environnement virtuel:
-    ````
+3. Create and activate a virtual environment:
+    ````bash
+    python -m venv venv
+    source venv/bin/activate
     ```` 
-4. Installez les dépendances nécessaires à l'aide du fichier requirements.txt:
+4. Install the necessary dependencies using the requirements.txt file:
+    ````bash
+    pip install -r requirements.txt
     ````
-    ````
-5. Chemin vers l'application blender  
-Une fois blender installer, il faut définir le chemin vers lequel se trouve l'éxecutable de l'application blender dans le fichier data.json 
+5. ⚠️ Path to Blender application ⚠️
+Once Blender is installed, you need to define the path to where the Blender application executable is located in the data.json file.
+For example, on my system, the Blender executable is here:  
+        ```
+        /Applications/Blender.app/Contents/MacOS/Blender  
+        ```  
+    and I put it in the data.json file like this:   
+    ```json
+    "blender": {
+        "application_path": "/Applications/Blender.app/Contents/MacOS/Blender"
+      }
+    ```   
+    
 
 ### windows
 
-## 🕹️ Utilisation
-Ouvrir un terminal
+1. Clone this repository to your machine using Git Bash:
+   ````bash
+   git clone https://github.com/LudoTreb/auto_calendar.git
 
-1. Assurez-vous que vous êtes dans le répertoire racine du projet :
+    ````
 
-```plain
-cd /chemin/vers/dossier/Auto_calendar
+2. Navigate to the project directory:
+   ````bash
+   cd auto_calendar
+
+    ```` 
+3. Create and activate a virtual environment:
+    ````bash
+    python -m venv venv
+    venv\Scripts\activate
+    ```` 
+4. Install the necessary dependencies using the requirements.txt file:
+    ````bash
+    pip install -r requirements.txt
+    ````
+5. ⚠️ Path to Blender application ⚠️
+Once Blender is installed, you need to define the path to where the Blender application executable is located in the data.json file.
+For example, on my system, the Blender executable is here:  
+        ```
+        /Applications/Blender.app/Contents/MacOS/Blender  
+        ```  
+    and I put it in the data.json file like this:   
+    ```json
+    "blender": {
+        "application_path": "/Applications/Blender.app/Contents/MacOS/Blender"
+      }
+    ```  
+
+## 🕹️ Usage
+Open a terminal
+
+1. Make sure you are in the root directory of the project:
+
+```bash
+cd /path/to/folder/auto_calendar
 ```
-2. Exécutez le script principal main.py pour générer le calendrier :
-```python
+2. Run the main script main.py to generate the calendar:
+```bash
 python main.py
 ```
 
-3. Récupérer le calendier en pdf dans le dossier '***export_pdf' et voilà ✨
+3. Retrieve the calendar in PDF format from the '***export_pdf' folder and there you go ✨
 
-Vous pouvez ensuite changer l'année dans le fichier data.json pour mettre à jour le calendier. Par exemple mettre 2025, sauvegarder le fichier data.json et exécuter de nouveau le script.  
+### Preview
+![un petit preview en gif](ress/img/calendar_graphictypo_2024.gif)
 
+ 
 
+When the next year comes, you just have to change the year in the data.json file and rerun the script to get an up-to-date calendar 🎉
 
