@@ -25,11 +25,12 @@ def run_blender_script(my_script):
 def main():
 
     name_calendar = f"{data['Settings']['save']['name']}{data['Dates']['year']['year']}{data['Settings']['save']['extension']}"
+    path_img_folder = data["Settings"]["save"]["temp_render_path"]
     my_script = "blender_script/calendar_generate.py"
 
     run_blender_script(my_script)
 
-    create_pdf_from_img(name_calendar)
+    create_pdf_from_img(name_calendar, path_img_folder)
 
 
 if __name__ == "__main__":
