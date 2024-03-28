@@ -223,12 +223,12 @@ for month_num in range(1, 13):
     bpy.ops.object.delete(use_global=False, confirm=False)
 
     # create the path of the folder temporary save the image jpeg
-    temp_img_path = render_output_folder / "temp_img"
-    if not temp_img_path.is_dir():
-        temp_img_path.mkdir()
+
+    if not render_output_folder.is_dir():
+        render_output_folder.mkdir()
 
     render_output_path = (
-        temp_img_path
+        render_output_folder
         / f'calendar_graphictypo_{data["Dates"]["year"]["year"]}_{month_num}.jpg'
     )
 
