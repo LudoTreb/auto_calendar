@@ -1,6 +1,5 @@
 .venv
 __pycache__
 .DS_Store
-ress
 try_and_delete.py
 ***export_pdf
