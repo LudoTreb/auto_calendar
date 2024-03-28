@@ -70,8 +70,6 @@ def create_pdf_from_img(name_pdf: str, path_imgs_folder: str):
     pdf_paths_sorted = sorted(
         pdf_paths, key=lambda path: int(str(path).split("_")[-1].split(".")[0])
     )
-    # create a PdfWriter instance to merge all pdf files into a single one
-    merger = PdfWriter()
 
     if not pdf_out_folder.exists():
         pdf_out_folder.mkdir()
@@ -81,8 +79,11 @@ def create_pdf_from_img(name_pdf: str, path_imgs_folder: str):
 
     else:
         pdf_out_file = pdf_out_folder / name_pdf
+
         if pdf_out_file.exists():
             pdf_out_file.unlink()
+            merge_pdf_into_single_pdf(pdf_out_file, pdf_paths_sorted)
+        else:
             merge_pdf_into_single_pdf(pdf_out_file, pdf_paths_sorted)
 
     delete_temp_folder(image_folder)
