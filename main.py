@@ -4,10 +4,13 @@ from pathlib import Path
 
 from pdf_generate.create_pdf import create_pdf_from_img
 
+with open("data.json", "r") as json_file:
+    data = json.load(json_file)
+
 
 def run_blender_script(my_script):
 
-    executable_blender_path = "/Applications/Blender.app/Contents/MacOS/Blender"
+    executable_blender_path = data["Settings"]["blender"]["application_path"]
 
     command_blender = [
         executable_blender_path,
@@ -20,9 +23,6 @@ def run_blender_script(my_script):
 
 
 def main():
-
-    with open("data.json", "r") as json_file:
-        data = json.load(json_file)
 
     name_calendar = f"{data['Settings']['save']['name']}{data['Dates']['year']['year']}{data['Settings']['save']['extension']}"
     my_script = "blender_script/calendar_generate.py"
