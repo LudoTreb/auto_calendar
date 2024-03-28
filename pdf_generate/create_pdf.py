@@ -7,7 +7,8 @@ from PyPDF2 import PdfWriter
 with open("data.json", "r") as json_file:
     data = json.load(json_file)
 
-name_calendar = data["Settings"]["save"]["name"]
+
+pdf_out_folder = Path.cwd() / str(data["Settings"]["save"]["export_path"])
 
 
 def delete_temp_folder(path_folder_to_delete: Path):
@@ -28,15 +29,29 @@ def delete_temp_folder(path_folder_to_delete: Path):
         path_folder_to_delete.rmdir()
 
     else:
-        print("Le dossier n'existe pas")
+        print("The folder does not exist")
 
 
-def create_pdf_from_img(name_pdf: str, path_imgs_folder: str = "ress/temp_img"):
+def merge_pdf_into_single_pdf(pdf_name: str, pdfs: list):
+    """Generate one pdf file  from a several pdf files.
+
+    Args:
+        pdf_name (str): the name of the pdf file with extension .pdf
+        pdfs (list): list of all pdf files
+    """
+    merger = PdfWriter()
+    for pdf in pdfs:
+        merger.append(pdf)
+    merger.write(pdf_name)
+    merger.close
+
+
+def create_pdf_from_img(name_pdf: str, path_imgs_folder: str):
     """create one pdf from all images present in a list.
 
     Args:
-        paht_imgs_folder (_type_): Path object of the images folder
-        path_pdf_output (_type_): Path objet of the pdf file
+        name_pdf (str): Path of the pdf file.
+        paht_imgs_folder (_type_): Path of the images folder
     """
     # rerieves all jpeg paths in a list of string
     image_folder = Path.cwd() / path_imgs_folder
@@ -57,13 +72,17 @@ def create_pdf_from_img(name_pdf: str, path_imgs_folder: str = "ress/temp_img"):
     )
     # create a PdfWriter instance to merge all pdf files into a single one
     merger = PdfWriter()
-    pdf_out_folder = Path.cwd() / "***export_pdf"
-    pdf_out_folder.mkdir()
-    pdf_out_file = pdf_out_folder / name_pdf
 
-    for pdf in pdf_paths_sorted:
-        merger.append(pdf)
-    merger.write(pdf_out_file)
-    merger.close
+    if not pdf_out_folder.exists():
+        pdf_out_folder.mkdir()
+        pdf_out_file = pdf_out_folder / name_pdf
+
+        merge_pdf_into_single_pdf(pdf_out_file, pdf_paths_sorted)
+
+    else:
+        pdf_out_file = pdf_out_folder / name_pdf
+        if pdf_out_file.exists():
+            pdf_out_file.unlink()
+            merge_pdf_into_single_pdf(pdf_out_file, pdf_paths_sorted)
 
     delete_temp_folder(image_folder)
