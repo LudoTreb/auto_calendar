@@ -16,7 +16,7 @@ with open(data_path, "r") as json_file:
 name_calendar = data["Settings"]["save"]["name"]
 render_output_folder = Path.cwd() / data["Settings"]["save"]["temp_render_path"]
 
-font_roman = str(Path.cwd() / data["Fonts"]["roman_path"])
+font_roman = str(Path.cwd() / data["Fonts"]["regular_path"])
 font_bold = str(Path.cwd() / data["Fonts"]["bold_path"])
 
 
@@ -218,7 +218,7 @@ white_material = create_material(
 )
 
 
-for month_num in range(1, 3):
+for month_num in range(1, 13):
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False, confirm=False)
 
@@ -257,13 +257,14 @@ for month_num in range(1, 3):
     )
 
     # create the month
-    month_name_formatted = months[month_num][:3] + "."
+    month_name_formatted = months[month_num][:3]
     create_text(
         month_name_formatted,
         data["Dates"]["month"]["month_pos"],
         white_material,
         font_bold,
         data["Dates"]["month"]["month_scale"],
+        align=("RIGHT", "TOP"),
     )
 
     # create day's name line
