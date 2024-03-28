@@ -14,6 +14,9 @@
         "name": "calendar_graphictypo_",
         "extension": ".pdf",
         "temp_render_path": "ress"
+      },
+      "blender": {
+        "application_path": "/Applications/Blender.app/Contents/MacOS/Blender"
       }
     },
     "Fonts": {
