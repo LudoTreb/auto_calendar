@@ -101,11 +101,17 @@ For example, on my system, the Blender executable is here:
 ## 🕹️ Usage
 Open a terminal
 
-1. Make sure you are in the root directory of the project:
+1. Make sure you are in the root directory of the project and your virtual environment is activate:
 
 ```bash
 cd /path/to/folder/auto_calendar
+
+source venv/bin/activate # on macos linux
+
+venv\Scripts\activate # on windows
+
 ```
+   
 2. Run the main script main.py to generate the calendar:
 ```bash
 python main.py
