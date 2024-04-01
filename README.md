@@ -86,15 +86,15 @@ For example, on my system, the Blender executable is here:
     pip install -r requirements.txt
     ````
 5. ⚠️ Path to Blender application ⚠️
-Once Blender is installed, you need to define the path to where the Blender application executable is located in the data.json file.
-For example, on my system, the Blender executable is here:  
+Once Blender is installed, you need to define the path to where the Blender application executable is located in the data.json file. To avoid problems, use a double \ to define the path. 
+For example:  
         ```
-        /Applications/Blender.app/Contents/MacOS/Blender  
+        "C:\\Users\\apps\\blender\\current\\blender.exe"
         ```  
     and I put it in the data.json file like this:   
     ```json
     "blender": {
-        "application_path": "/Applications/Blender.app/Contents/MacOS/Blender"
+        "application_path": ""C:\\Users\\apps\\blender\\current\\blender.exe""
       }
     ```  
 
@@ -117,7 +117,7 @@ venv\Scripts\activate # on windows
 python main.py
 ```
 
-3. Retrieve the calendar in PDF format from the '***export_pdf' folder and there you go ✨
+3. Retrieve the calendar in PDF format from the 'export_pdf' folder and there you go ✨
 
 ### Preview
 ![un petit preview en gif](ress/img/calendar_graphictypo_2024.gif)
