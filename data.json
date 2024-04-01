@@ -14,7 +14,7 @@
         "name": "calendar_graphictypo_",
         "extension": ".pdf",
         "temp_render_path": "ress/temp_img",
-        "export_path": "***export_pdf"
+        "export_path": "export_pdf"
       },
       "blender": {
         "application_path": "/Applications/Blender.app/Contents/MacOS/Blender"
