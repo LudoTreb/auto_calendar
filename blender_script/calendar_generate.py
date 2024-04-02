@@ -218,7 +218,7 @@ white_material = create_material(
 )
 
 
-for month_num in range(1, 13):
+for month_num in range(1, 3):
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False, confirm=False)
 
