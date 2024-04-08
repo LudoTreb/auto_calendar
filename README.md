@@ -2,7 +2,7 @@
 # Auto Calendar
 
 Welcome to Auto Calendar, a Python script that utilizes the Blender bpy library to create a calendar based on data it retrieves, such as the year, fonts, colors, etc., present in a JSON file.  
-The script generates a PDF file with all the months, in A3+ format.
+The script generates a PDF file with all the months, in A3 format.
 This way, you get a beautiful up-to-date calendar by simply changing the year, and that for all the upcoming years ✨😊
 
 ## 📕 Table of Contents
@@ -94,7 +94,7 @@ For example:
     and I put it in the data.json file like this:   
     ```json
     "blender": {
-        "application_path": ""C:\\Users\\apps\\blender\\current\\blender.exe""
+        "application_path": "C:\\Users\\apps\\blender\\current\\blender.exe"
       }
     ```  
 
@@ -120,7 +120,7 @@ python main.py
 3. Retrieve the calendar in PDF format from the 'export_pdf' folder and there you go ✨
 
 ### Preview
-![un petit preview en gif](ress/img/calendar_graphictypo_2024.gif)
+![preview gif](ress/img/calendar_graphictypo_2024.gif)
 
  
 
